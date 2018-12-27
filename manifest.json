@@ -23,5 +23,12 @@
         "128": "images/icon128.png"
       }
   },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:8081/tasks/*"],
+      "js": ["contentScript.js"],
+      "run_at": "document_end"
+    }
+  ],
   "manifest_version": 2
 }
