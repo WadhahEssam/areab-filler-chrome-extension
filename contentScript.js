@@ -1,7 +1,19 @@
 console.log('areab extension is running');
 
+///////////////////////////////////////////////////// Language Check /////////////////////////////////////////////////////////////
+setInterval(function () {
+  var language = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select').selectedIndex;
+  if (language == 1) {
+    chrome.storage.sync.set({'language': 'arabic'}, function() {
+      console.log('arabic');
+    });
+  } else {
+    chrome.storage.sync.set({'language': 'english'}, function() {
+      console.log('english')
+    });
+  }
+}, 1000);
 /////////////////////////////////////////////////////////// Values ///////////////////////////////////////////////////////////////
-
 var values = [
   {
     type: "افتراضي",
@@ -32,7 +44,6 @@ function getValue(type) {
   // if it didin't find it will return the default value
   return values[0].value;
 }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -77,9 +88,6 @@ chrome.runtime.onMessage.addListener(
         }
       }
 
-      // this will print the label of the input
-      console.log(document.querySelector('#page-wrapper > div.overflow-container > form > div > div.row.ibox-content.arabic > div.formSection.property_data > div:nth-child(5) > div:nth-child(1) > div > input').parentElement.parentElement.children[0].textContent);
-re
       // المنطقة و المدينة و الحي
       document.getElementById('fill-regions').click()
 

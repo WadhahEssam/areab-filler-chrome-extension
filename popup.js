@@ -5,3 +5,9 @@ document.getElementById('fill-button').addEventListener('click', function () {
     });
   });
 })
+
+setInterval(function () {
+  chrome.storage.sync.get(['language'], function(result) {
+    console.log('language currently is ' + result.language);
+  });
+}, 1000)
