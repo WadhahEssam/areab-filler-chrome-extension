@@ -5,11 +5,11 @@ setInterval(function () {
   var language = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select').selectedIndex;
   if (language == 1) {
     chrome.storage.sync.set({'language': 'arabic'}, function() {
-      console.log('arabic');
+      // nothing
     });
   } else {
     chrome.storage.sync.set({'language': 'english'}, function() {
-      console.log('english')
+      // nothing
     });
   }
 }, 1000);
