@@ -1,3 +1,4 @@
+console.log('areab extension is running');
 
 /////////////////////////////////////////////////////////// Values ///////////////////////////////////////////////////////////////
 
@@ -78,7 +79,7 @@ chrome.runtime.onMessage.addListener(
 
       // this will print the label of the input
       console.log(document.querySelector('#page-wrapper > div.overflow-container > form > div > div.row.ibox-content.arabic > div.formSection.property_data > div:nth-child(5) > div:nth-child(1) > div > input').parentElement.parentElement.children[0].textContent);
-      
+re
       // المنطقة و المدينة و الحي
       document.getElementById('fill-regions').click()
 
