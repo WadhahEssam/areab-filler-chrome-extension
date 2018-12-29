@@ -94,6 +94,22 @@ var values = [
 
 ];
 
+var checkboxes = [
+  'میاه',
+  'صرف',
+  'سلالم',
+  'مصاعد',
+  'حوائط حاملة',
+]
+
+function isChecked(type) {
+  for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].trim() == type.trim()) {
+      return true;
+    }
+  }
+  return false;
+}
 
 function getValue(type) {
   for (var i = 0; i < values.length; i++) {
@@ -149,13 +165,22 @@ chrome.runtime.onMessage.addListener(
         }
       }
 
+      document.querySelectorAll('input[type="checkbox"]')
+
+      // dealing with checkboxes
+      var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+      for (var i = 0; i < allCheckboxes.length; i++) {
+        var checkboxType = allCheckboxes[i].parentElement.parentElement.textContent;
+        if (isChecked(checkboxType)) {
+          allCheckboxes[i].click();
+        }
+      }
+
       // المنطقة و المدينة و الحي
       document.getElementById('fill-regions').click();
-
 
       // المنطقة و المدينة و الحي
       document.getElementById('fill-property-type').click();
 
-      sendResponse({farewell: "this will appear in the popup console"});
   });
   
