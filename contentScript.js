@@ -123,7 +123,55 @@ var values = [
     type: "طول",
     value: "18"
   },
-  
+  {
+    type: "أقرب شارع",
+    value: "شارع الملك عبدالله"
+  },
+  {
+    type: "الأحواش",
+    value: "بلاط"
+  },
+  {
+    type: "الإستقبال",
+    value: "سراميك"
+  },
+  {
+    type: "المدخل",
+    value: "بورسلان"
+  },
+  {
+    type: "الغرف",
+    value: "خشب"
+  },
+  {
+    type: "شمال",
+    value: "خرسانة"
+  },
+  {
+    type: "جنوب",
+    value: "خرسانة"
+  },
+  {
+    type: "شرق",
+    value: "خرسانة"
+  },
+  {
+    type: "غرب",
+    value: "خرسانة"
+  },
+  {
+    type: "نوع العزل",
+    value: "عادي"
+  },
+  {
+    type: "الأبواب الداخلیة",
+    value: "خشبية"
+  },
+  {
+    type: "الأبواب الخارجیة",
+    value: "حديد"
+  },
+
 ];
 
 var checkboxes = [
@@ -132,6 +180,8 @@ var checkboxes = [
   'سلالم',
   'مصاعد',
   'حوائط حاملة',
+  'داخل النطاق',
+  'مسفلتة',
 ]
 
 function isChecked(type) {
@@ -146,7 +196,6 @@ function isChecked(type) {
 function getValue(type) {
   for (var i = 0; i < values.length; i++) {
     if (values[i].type.trim() == type.trim()) {
-      console.log(values[i].value);
       var value = values[i].value;
       values.push(values.splice(i, 1)[0]);
       return value;
