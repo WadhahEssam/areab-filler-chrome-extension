@@ -91,7 +91,39 @@ var values = [
     type: "رقم القطعة",
     value: "93799468"
   },
-
+  {
+    type: "شمال",
+    value: "12"
+  },
+  {
+    type: "طول",
+    value: "12"
+  },
+  {
+    type: "جنوب",
+    value: "15"
+  },
+  {
+    type: "طول",
+    value: "15"
+  },
+  {
+    type: "شرق",
+    value: "17"
+  },
+  {
+    type: "طول",
+    value: "17"
+  },
+  {
+    type: "غرب",
+    value: "18"
+  },
+  {
+    type: "طول",
+    value: "18"
+  },
+  
 ];
 
 var checkboxes = [
@@ -115,7 +147,9 @@ function getValue(type) {
   for (var i = 0; i < values.length; i++) {
     if (values[i].type.trim() == type.trim()) {
       console.log(values[i].value);
-      return (values[i].value);
+      var value = values[i].value;
+      values.push(values.splice(i, 1)[0]);
+      return value;
     }
   }
   // if it didin't find it will return the default value
