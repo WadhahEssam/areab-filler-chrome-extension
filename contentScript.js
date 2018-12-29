@@ -3,7 +3,11 @@ console.log('areab extension is running');
 ///////////////////////////////////////////////////// Language Check /////////////////////////////////////////////////////////////
 var oldLanguage = 2;
 setInterval(function () {
-  var currentLanguage = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select').selectedIndex;
+  var currentLanguageSelect = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select');
+  var currentLanguage = null;
+  if (currentLanguageSelect !== null) {
+    currentLanguage = currentLanguageSelect.selectedIndex;
+  }
   if (oldLanguage != currentLanguage) {  
     if (currentLanguage == 1) {
       chrome.storage.sync.set({'language': 'arabic'}, function() {
@@ -16,9 +20,6 @@ setInterval(function () {
     }
   }
   oldLanguage = currentLanguage;
-
-
-
 }, 1000);
 /////////////////////////////////////////////////////////// Values ///////////////////////////////////////////////////////////////
 var values = [
@@ -36,8 +37,61 @@ var values = [
   },
   {
     type: "رمز العقار",
-    value: "رمز العقاار"
+    value: "123ABC"
   },
+  {
+    type: "رقم الصك",
+    value: "3401846309"
+  },
+  {
+    type: "تاریخھ",
+    value: "11/11/2019"
+  },
+  {
+    type: "رمز العقار",
+    value: "عقار ١٢ب"
+  },
+  {
+    type: "صادر من",
+    value: "الرياض - الدرعية"
+  },
+  {
+    type: "رقم الرخصة",
+    value: "1038741893071"
+  },
+  {
+    type: "تاریخھا",
+    value: "12/12/2019"
+  },
+  {
+    type: "عمر العقار",
+    value: "90"
+  },
+  {
+    type: "طالب التقييم",
+    value: "بنك الرباض"
+  },
+  {
+    type: "جوال صاحب الطلب",
+    value: "0553748884"
+  },
+  {
+    type: "إسم المالك",
+    value: "محمد"
+  },
+  {
+    type: "هاتف العميل",
+    value: "055958000"
+  },
+  {
+    type: "رقم المخطط",
+    value: "08236302"
+  },
+  {
+    type: "رقم القطعة",
+    value: "93799468"
+  },
+
 ];
 
 
@@ -96,7 +150,11 @@ chrome.runtime.onMessage.addListener(
       }
 
       // المنطقة و المدينة و الحي
-      document.getElementById('fill-regions').click()
+      document.getElementById('fill-regions').click();
+
+
+      // المنطقة و المدينة و الحي
+      document.getElementById('fill-property-type').click();
 
       sendResponse({farewell: "this will appear in the popup console"});
   });
