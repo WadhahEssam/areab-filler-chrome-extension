@@ -1,17 +1,24 @@
 console.log('areab extension is running');
 
 ///////////////////////////////////////////////////// Language Check /////////////////////////////////////////////////////////////
+var oldLanguage = 2;
 setInterval(function () {
-  var language = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select').selectedIndex;
-  if (language == 1) {
-    chrome.storage.sync.set({'language': 'arabic'}, function() {
-      // nothing
-    });
-  } else {
-    chrome.storage.sync.set({'language': 'english'}, function() {
-      // nothing
-    });
+  var currentLanguage = document.querySelector('#page-wrapper > div.row.border-bottom.site-main-navbar > nav > ul > li:nth-child(1) > div > select').selectedIndex;
+  if (oldLanguage != currentLanguage) {  
+    if (currentLanguage == 1) {
+      chrome.storage.sync.set({'language': 'arabic'}, function() {
+        // nothing
+      });
+    } else {
+      chrome.storage.sync.set({'language': 'english'}, function() {
+        // nothing
+      });
+    }
   }
+  oldLanguage = currentLanguage;
+
+
+
 }, 1000);
 /////////////////////////////////////////////////////////// Values ///////////////////////////////////////////////////////////////
 var values = [
@@ -78,7 +85,7 @@ chrome.runtime.onMessage.addListener(
           console.log('this is a date');
           allInputs[i].click();
           var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
-          var days = weeks[weeks.length - 1].children;
+          var days = weeks[weeks.length-1].children;
           var lastDay = days[days.length-1];
           lastDay.click();
         } 

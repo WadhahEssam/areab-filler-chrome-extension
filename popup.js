@@ -26,4 +26,4 @@ setInterval(function () {
       languageWanring.style.display = 'block';
     }
   });
-}, 1000)
+}, 500)
