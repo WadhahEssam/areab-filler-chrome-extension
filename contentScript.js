@@ -1,5 +1,34 @@
 console.log('hello this is perfectly working fine and everything is working as expected')
 
+var values = [
+  {
+    type: "افتراضي",
+    value: "TEST"
+  },
+  {
+    type: "رقم التكليف",
+    value: Math.floor(Math.random() * 9999999) + ""
+  },
+  {
+    type: "رمز العقار",
+    value: Math.floor(Math.random() * 9999999) + ""
+  },
+  {
+    type: "تاريخ التكليف",
+    value: "Date"
+  },
+];
+
+
+function getValue(type) {
+  for (var i = 0; i < values.length; i++) {
+    if (values[i].type === type) {
+      return (values[i].value);
+    }
+  }
+  return 'not found';
+}
+
 function setNativeValue(element, value) {
   const { set: valueSetter } = Object.getOwnPropertyDescriptor(element, 'value') || {}
   const prototype = Object.getPrototypeOf(element)
@@ -21,7 +50,13 @@ chrome.runtime.onMessage.addListener(
       console.log(sender.tab ?
                   "from a content script:" + sender.tab.url :
                   request.greeting);
-
+      
+      var allInputs = document.querySelectorAll('input.form-control');
+      for (var i = 0; i < allInputs.length; i++) {
+        var type = allInputs[i].parentElement.parentElement.children[0].textContent;
+        setNativeValue(allInputs[i],  getValue('افتراضي'));
+        allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+      }
 
       // this will print the label of the input
       console.log(document.querySelector('#page-wrapper > div.overflow-container > form > div > div.row.ibox-content.arabic > div.formSection.property_data > div:nth-child(5) > div:nth-child(1) > div > input').parentElement.parentElement.children[0].textContent);
