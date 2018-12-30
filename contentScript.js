@@ -220,7 +220,31 @@ var radioButtons = [
   {
     name: 'caseOfEvaluation',
     value: 'new_building_with_spec_price',
-  }
+  },
+  {
+    name: 'maintenance__radio',
+    value: 'yes',
+  },
+  {
+    name: 'legal_issues__radio',
+    value: 'yes',
+  },
+  {
+    name: 'concrete_ceiling__radio',
+    value: 'yes',
+  },
+  {
+    name: 'building_license__radio',
+    value: 'no',
+  },
+  {
+    name: 'ready_for_residence__radio',
+    value: 'yes',
+  },
+  {
+    name: 'property_inhabited__radio',
+    value: 'no',
+  },
   
 ]
 
