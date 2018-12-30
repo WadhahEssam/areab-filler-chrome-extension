@@ -245,7 +245,17 @@ var radioButtons = [
     name: 'property_inhabited__radio',
     value: 'no',
   },
-  
+]
+
+var textareas = [
+  {
+    type: "افتراضي",
+    value: "TEST"
+  },
+  {
+    type: 'الرجاء التحديد',
+    value: 'هناك معدات قديمة يجب اصلاحها'
+  },
 ]
 
 function isChecked(type) {
@@ -277,6 +287,18 @@ function getValue(type) {
   // if it didin't find it will return the default value
   return values[0].value;
 }
+
+function getTextareaValue(type) {
+  for (var i = 0; i < textareas.length; i++) {
+    if (textareas[i].type.trim() == type.trim()) {
+      var value = textareas[i].value;
+      textareas.push(textareas.splice(i, 1)[0]);
+      return value;
+    }
+  }
+  // if it didin't find it will return the default value
+  return textareas[0].value;
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -304,6 +326,18 @@ chrome.runtime.onMessage.addListener(
       // في حالة تقییم عمارة سكنیة أو تجاریة یتم تحدید
       // comment it if you don't want it ( it has to be at the beggining )
       document.querySelector('input[type="checkbox"].labelMargin').click()
+
+      // dealing with radio buttons ( this should be in the begginging ) 
+      // because it opens new fields and text areas
+      var allRadioButtons = document.querySelectorAll('input[type="radio"]');
+      for (var i =0; i < allRadioButtons.length; i++) {
+        var value = getRadioValue(allRadioButtons[i].name);
+        if (value != null) {
+          if (value == allRadioButtons[i].value) {
+            allRadioButtons[i].click();
+          }
+        }
+      }
 
       var allInputs = document.querySelectorAll('input.form-control');
       for (var i = 0; i < allInputs.length; i++) {
@@ -336,16 +370,14 @@ chrome.runtime.onMessage.addListener(
         }
       }
 
-      // dealing with radio buttons
-      var allRadioButtons = document.querySelectorAll('input[type="radio"]');
-      for (var i =0; i < allRadioButtons.length; i++) {
-        console.log('name: ' + allRadioButtons[i].name + ' , value: ' + allRadioButtons[i].value + ', methodValue: ' + getRadioValue(allRadioButtons[i].name))
-        var value = getRadioValue(allRadioButtons[i].name);
-        if (value != null) {
-          if (value == allRadioButtons[i].value) {
-            allRadioButtons[i].click();
-          }
-        }
+      // dealting with text areas
+      var allTextareas = document.querySelectorAll('textarea');
+      for (var i = 0; i < allTextareas.length; i++) {
+        var type = allTextareas[i].parentElement.textContent;
+        var value = getTextareaValue(type);
+        console.log('type : ' + type + ' / value : ' + value);
+        setNativeValue(allTextareas[i],  value);
+        allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
       }
 
       // المنطقة و المدينة و الحي
