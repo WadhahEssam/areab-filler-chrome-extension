@@ -171,7 +171,38 @@ var values = [
     type: "الأبواب الخارجیة",
     value: "حديد"
   },
-
+  {
+    type: "عدد عدادات الكھرباء",
+    value: "1"
+  },
+  {
+    type: "رقم العداد",
+    value: "82639948012"
+  },
+  {
+    type: "عدد عدادات المیاه",
+    value: "2"
+  },
+  {
+    type: "رقم العداد",
+    value: "1297840693846"
+  },
+  {
+    type: "عدد الشقق",
+    value: "3"
+  },
+  {
+    type: "عدد المحلات التجاریة",
+    value: "5"
+  },
+  {
+    type: "إیجارھا",
+    value: "10,000"
+  },
+  {
+    type: "إیجارھا",
+    value: "20,000"
+  },
 ];
 
 var checkboxes = [
@@ -228,6 +259,10 @@ chrome.runtime.onMessage.addListener(
                   "from a content script:" + sender.tab.url :
                   request.greeting);
       
+      // في حالة تقییم عمارة سكنیة أو تجاریة یتم تحدید
+      // comment it if you don't want it ( it has to be at the beggining )
+      document.querySelector('input[type="checkbox"].labelMargin').click()
+
       var allInputs = document.querySelectorAll('input.form-control');
       for (var i = 0; i < allInputs.length; i++) {
         var type = allInputs[i].parentElement.parentElement.children[0].textContent;
