@@ -197,12 +197,13 @@ var values = [
   },
   {
     type: "إیجارھا",
-    value: "10,000"
+    value: "10000"
   },
   {
     type: "إیجارھا",
-    value: "20,000"
+    value: "20000"
   },
+
 ];
 
 var checkboxes = [
@@ -215,6 +216,14 @@ var checkboxes = [
   'مسفلتة',
 ]
 
+var radioButtons = [
+  {
+    name: 'caseOfEvaluation',
+    value: 'new_building_with_spec_price',
+  }
+  
+]
+
 function isChecked(type) {
   for (var i = 0; i < checkboxes.length; i++) {
     if (checkboxes[i].trim() == type.trim()) {
@@ -222,6 +231,15 @@ function isChecked(type) {
     }
   }
   return false;
+}
+
+function getRadioValue(name) {
+  for (var i =0; i < radioButtons.length; i++) {
+    if (radioButtons[i].name.trim() == name.trim()) {
+      return radioButtons[i].value;
+    }
+  }
+  return null;
 }
 
 function getValue(type) {
@@ -267,7 +285,7 @@ chrome.runtime.onMessage.addListener(
       for (var i = 0; i < allInputs.length; i++) {
         var type = allInputs[i].parentElement.parentElement.children[0].textContent;
         var value = getValue(type);
-        console.log('type : ' + type + ' / value : ' + value);
+        // console.log('type : ' + type + ' / value : ' + value);
 
         if (value == 'Date') {
           console.log('this is a date');
@@ -294,10 +312,23 @@ chrome.runtime.onMessage.addListener(
         }
       }
 
+      // dealing with radio buttons
+      var allRadioButtons = document.querySelectorAll('input[type="radio"]');
+      for (var i =0; i < allRadioButtons.length; i++) {
+        console.log('name: ' + allRadioButtons[i].name + ' , value: ' + allRadioButtons[i].value + ', methodValue: ' + getRadioValue(allRadioButtons[i].name))
+        var value = getRadioValue(allRadioButtons[i].name);
+        if (value != null) {
+          if (value == allRadioButtons[i].value) {
+            allRadioButtons[i].click();
+          }
+        }
+      }
+
       // المنطقة و المدينة و الحي
       document.getElementById('fill-regions').click();
 
-      // المنطقة و المدينة و الحي
+      // fill all SELECT_INPUT vlues other than 
+      // region , this is not customizable
       document.getElementById('fill-property-type').click();
 
   });
