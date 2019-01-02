@@ -352,7 +352,7 @@ chrome.runtime.onMessage.addListener(
       for (var i = 0; i < allInputs.length; i++) {
         var type = allInputs[i].parentElement.parentElement.children[0].textContent;
         var value = getValue(type);
-        // console.log('type : ' + type + ' / value : ' + value);
+        console.log('type : ' + type + ' / value : ' + value);
 
         if (value == 'Date') {
           console.log('this is a date');
