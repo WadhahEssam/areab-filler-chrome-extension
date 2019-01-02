@@ -1,9 +1,18 @@
 var fillButton = document.getElementById('fill-button');
+var fillAllButton = document.getElementById('fill-all-button');
 var languageWanring = document.getElementById('change-language-warning');
 
 fillButton.addEventListener('click', function () {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {greeting: "( this will appear in the browser console )"}, function(response) {
+    chrome.tabs.sendMessage(tabs[0].id, {type: "fill"}, function(response) {
+      console.log('message received');
+    });
+  });
+})
+
+fillAllButton.addEventListener('click', function () {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {type: "fill-all"}, function(response) {
       console.log('message received');
     });
   });

@@ -330,71 +330,151 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
       console.log(sender.tab ?
                   "from a content script:" + sender.tab.url :
-                  request.greeting);
+                  request.type);
       
-      // في حالة تقییم عمارة سكنیة أو تجاریة یتم تحدید
-      // comment it if you don't want it ( it has to be at the beggining )
-      document.querySelector('input[type="checkbox"].labelMargin').click()
+      if (request.type == 'fill') {
+        // في حالة تقییم عمارة سكنیة أو تجاریة یتم تحدید
+        // comment it if you don't want it ( it has to be at the beggining )
+        document.querySelector('input[type="checkbox"].labelMargin').click()
 
-      // dealing with radio buttons ( this should be in the begginging ) 
-      // because it opens new fields and text areas
-      var allRadioButtons = document.querySelectorAll('input[type="radio"]');
-      for (var i =0; i < allRadioButtons.length; i++) {
-        var value = getRadioValue(allRadioButtons[i].name);
-        if (value != null) {
-          if (value == allRadioButtons[i].value) {
-            allRadioButtons[i].click();
+        // dealing with radio buttons ( this should be in the begginging ) 
+        // because it opens new fields and text areas
+        var allRadioButtons = document.querySelectorAll('input[type="radio"]');
+        for (var i =0; i < allRadioButtons.length; i++) {
+          var value = getRadioValue(allRadioButtons[i].name);
+          if (value != null) {
+            if (value == allRadioButtons[i].value) {
+              allRadioButtons[i].click();
+            }
           }
         }
-      }
 
-      var allInputs = document.querySelectorAll('input.form-control');
-      for (var i = 0; i < allInputs.length; i++) {
-        var type = allInputs[i].parentElement.parentElement.children[0].textContent;
-        var value = getValue(type);
-        console.log('type : ' + type + ' / value : ' + value);
+        var allInputs = document.querySelectorAll('input.form-control');
+        for (var i = 0; i < allInputs.length; i++) {
+          var type = allInputs[i].parentElement.parentElement.children[0].textContent;
+          var value = getValue(type);
+          console.log('type : ' + type + ' / value : ' + value);
 
-        if (value == 'Date') {
-          console.log('this is a date');
-          allInputs[i].click();
-          var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
-          var days = weeks[weeks.length-1].children;
-          var lastDay = days[days.length-1];
-          lastDay.click();
-        } 
-        else {
-          setNativeValue(allInputs[i],  value);
-          allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+          if (value == 'Date') {
+            console.log('this is a date');
+            allInputs[i].click();
+            var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
+            var days = weeks[weeks.length-1].children;
+            var lastDay = days[days.length-1];
+            lastDay.click();
+          } 
+          else {
+            setNativeValue(allInputs[i],  value);
+            allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+          }
         }
-      }
 
-      document.querySelectorAll('input[type="checkbox"]')
+        document.querySelectorAll('input[type="checkbox"]')
 
-      // dealing with checkboxes
-      var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-      for (var i = 0; i < allCheckboxes.length; i++) {
-        var checkboxType = allCheckboxes[i].parentElement.parentElement.textContent;
-        if (isChecked(checkboxType)) {
-          allCheckboxes[i].click();
+        // dealing with checkboxes
+        var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < allCheckboxes.length; i++) {
+          var checkboxType = allCheckboxes[i].parentElement.parentElement.textContent;
+          if (isChecked(checkboxType)) {
+            allCheckboxes[i].click();
+          }
         }
+
+        // dealting with text areas
+        var allTextareas = document.querySelectorAll('textarea');
+        for (var i = 0; i < allTextareas.length; i++) {
+          var type = allTextareas[i].parentElement.textContent;
+          var value = getTextareaValue(type);
+          console.log('type : ' + type + ' / value : ' + value);
+          setNativeValue(allTextareas[i],  value);
+          allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        // المنطقة و المدينة و الحي
+        document.getElementById('fill-regions').click();
+
+        // fill all SELECT_INPUT vlues other than 
+        // region , this is not customizable
+        document.getElementById('fill-property-type').click();
+      } 
+      else if (request.type == 'fill-all'){
+        // اختيار ( إرسال ) ء
+        document.getElementById('submit-task-extension').click();
+
+        // في حالة تقییم عمارة سكنیة أو تجاریة یتم تحدید
+        // comment it if you don't want it ( it has to be at the beggining )
+        document.querySelector('input[type="checkbox"].labelMargin').click()
+
+        // dealing with radio buttons ( this should be in the begginging ) 
+        // because it opens new fields and text areas
+        var allRadioButtons = document.querySelectorAll('input[type="radio"]');
+        for (var i =0; i < allRadioButtons.length; i++) {
+          var value = getRadioValue(allRadioButtons[i].name);
+          if (value != null) {
+            if (value == allRadioButtons[i].value) {
+              allRadioButtons[i].click();
+            }
+          }
+        }
+
+        var allInputs = document.querySelectorAll('input.form-control');
+        for (var i = 0; i < allInputs.length; i++) {
+          var type = allInputs[i].parentElement.parentElement.children[0].textContent;
+          var value = getValue(type);
+          console.log('type : ' + type + ' / value : ' + value);
+
+          if (value == 'Date') {
+            console.log('this is a date');
+            allInputs[i].click();
+            var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
+            var days = weeks[weeks.length-1].children;
+            var lastDay = days[days.length-1];
+            lastDay.click();
+          } 
+          else {
+            setNativeValue(allInputs[i],  value);
+            allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        }
+
+        document.querySelectorAll('input[type="checkbox"]')
+
+        // dealing with checkboxes
+        var allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < allCheckboxes.length; i++) {
+          var checkboxType = allCheckboxes[i].parentElement.parentElement.textContent;
+          if (isChecked(checkboxType)) {
+            allCheckboxes[i].click();
+          }
+        }
+
+        // dealting with text areas
+        var allTextareas = document.querySelectorAll('textarea');
+        for (var i = 0; i < allTextareas.length; i++) {
+          var type = allTextareas[i].parentElement.textContent;
+          var value = getTextareaValue(type);
+          console.log('type : ' + type + ' / value : ' + value);
+          setNativeValue(allTextareas[i],  value);
+          allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
+        }
+
+        // المنطقة و المدينة و الحي
+        document.getElementById('fill-regions').click();
+
+        // fill all SELECT_INPUT vlues other than 
+        // region , this is not customizable
+        document.getElementById('fill-property-type').click();
+
+
+        setTimeout(function () {
+        },1000);
+        setTimeout(function () {
+          document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > span > button').click();
+        },1000);
+        setTimeout(function () {
+          document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
+        },1000);
       }
-
-      // dealting with text areas
-      var allTextareas = document.querySelectorAll('textarea');
-      for (var i = 0; i < allTextareas.length; i++) {
-        var type = allTextareas[i].parentElement.textContent;
-        var value = getTextareaValue(type);
-        console.log('type : ' + type + ' / value : ' + value);
-        setNativeValue(allTextareas[i],  value);
-        allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
-      }
-
-      // المنطقة و المدينة و الحي
-      document.getElementById('fill-regions').click();
-
-      // fill all SELECT_INPUT vlues other than 
-      // region , this is not customizable
-      document.getElementById('fill-property-type').click();
 
   });
   
