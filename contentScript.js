@@ -211,8 +211,46 @@ var values = [
     type: "أرض",
     value: "1000"
   },
-
-
+  {
+    type: "خط العرض",
+    value: "20"
+  },
+  {
+    type: "خط الطول",
+    value: "50"
+  },
+  {
+    type: "من الأعلى يساراً",
+    value: "20"
+  },
+  {
+    type: "من الأعلى يساراً",
+    value: "80"
+  },
+  {
+    type: "من الأعلى يميناً",
+    value: "75"
+  },
+  {
+    type: "من الأعلى يميناً",
+    value: "31"
+  },
+  {
+    type: "من الأسفل يساراً",
+    value: "40"
+  },
+  {
+    type: "من الأسفل يساراً",
+    value: "55"
+  },
+  {
+    type: "من الأسفل يميناً",
+    value: "67"
+  },
+  {
+    type: "من الأسفل يميناً",
+    value: "70"
+  },
 ];
 
 var checkboxes = [
@@ -471,9 +509,6 @@ chrome.runtime.onMessage.addListener(
           // region , this is not customizable
           document.getElementById('fill-property-type').click();
 
-
-          setTimeout(function () {
-          },1000);
           setTimeout(function () {
             document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > span > button').click();
           },1000);
@@ -496,6 +531,39 @@ chrome.runtime.onMessage.addListener(
                   console.log(allTasks[i].children[0].textContent + " is found");
                   console.log('my job is suppose to be done');
                   allTasks[i].children[14].children[0].click();
+
+                  setTimeout(function () {
+
+                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> to solve the date ( needs refactoring ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                    var allInputs = document.querySelectorAll('input.form-control');
+                    for (var i = 0; i < allInputs.length; i++) {
+                      var type = allInputs[i].parentElement.parentElement.children[0].textContent;
+                      var value = getValue(type);
+                      console.log('type : ' + type + ' / value : ' + value);
+          
+                      if (value == 'Date') {
+                        console.log('this is a date');
+                        allInputs[i].click();
+                        var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
+                        var days = weeks[weeks.length-1].children;
+                        var lastDay = days[days.length-1];
+                        lastDay.click();
+                      } 
+                      else {
+                        setNativeValue(allInputs[i],  value);
+                        allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
+                      }
+                    }
+                    //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+                    document.getElementById('validate-task-extension').click();
+                    document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > div > div:nth-child(2) > span > button').click();
+                    document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
+                    setTimeout(function () {
+                      document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-cancel.swal2-styled').click()
+                    }, 500)
+                  }, 1000)
+                  break;
                 }
               }
             }, 1000)
