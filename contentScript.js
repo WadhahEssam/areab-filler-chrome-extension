@@ -310,7 +310,6 @@ function getTextareaValue(type) {
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 function setNativeValue(element, value) {
   const { set: valueSetter } = Object.getOwnPropertyDescriptor(element, 'value') || {}
   const prototype = Object.getPrototypeOf(element)
@@ -481,6 +480,28 @@ chrome.runtime.onMessage.addListener(
           setTimeout(function () {
             document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
           },1000);
+
+
+          setTimeout(function () {
+
+            // just go directly to the last one
+            if (document.querySelector('.next') != null) {
+              document.querySelectorAll('a')[document.querySelectorAll('a').length - 2].click();
+            }
+            setTimeout(function () {
+              var allTasks = document.querySelectorAll('tr');
+              for (var i = 1; i < allTasks.length; i++) {
+                console.log('searching for ' + values[2].value)
+                if (allTasks[i].children[11].textContent.trim() == values[2].value.trim()) {
+                  console.log(allTasks[i].children[0].textContent + " is found");
+                  console.log('my job is suppose to be done');
+                  allTasks[i].children[14].children[0].click();
+                }
+              }
+            }, 1000)
+
+          },3000);
+
         }
 
       }
