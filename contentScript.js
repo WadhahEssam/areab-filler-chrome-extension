@@ -445,7 +445,7 @@ function fillTask(id) {
     },1000);
     setTimeout(function () {
       document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
-    },1000);
+    },2000);
 
 
     setTimeout(function () {
@@ -466,6 +466,9 @@ function fillTask(id) {
             setTimeout(function () {
 
               //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> to solve the date ( needs refactoring ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+              setTimeout(function () {
+                document.getElementById('validate-task-extension').click();
+              }, 900)
               var allInputs = document.querySelectorAll('input.form-control');
               for (var i = 0; i < allInputs.length; i++) {
                 var type = allInputs[i].parentElement.parentElement.children[0].textContent;
@@ -486,29 +489,27 @@ function fillTask(id) {
                 }
               }
               //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
               setTimeout(function () {
-                document.getElementById('validate-task-extension').click();
                 document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > div > div:nth-child(2) > span > button').click();
                 document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
-              }, 500)
+              }, 900)
               setTimeout(function () {
                 document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-cancel.swal2-styled').click();
-              }, 1000)
+              }, 1200)
 
               // going back to the all tasks page
               setTimeout(function() {
                 // #side-menu > li:nth-child(4) > a
                 document.querySelector('#side-menu > li:nth-child(4) > a').click();
                 isFilling = false;
-              }, 1500);
+              }, 1700);
             }, 1500)
             break;
           }
         }
       }, 1000)
     },4000);
-  }, 2000)
+  }, 4000)
 
 }
 
@@ -591,7 +592,11 @@ chrome.runtime.onMessage.addListener(
         } else {
           document.querySelector('#side-menu > li:nth-child(4) > a').click();
 
-          var count = 0;
+          // for testing
+          fillTask(1);
+
+
+          var count = 1;
           setInterval(function () {
             if (isFilling == false) {
               if (count == 91) {
