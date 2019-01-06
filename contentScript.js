@@ -395,10 +395,10 @@ function fillTask(id) {
     for (var i = 0; i < allInputs.length; i++) {
       var type = allInputs[i].parentElement.parentElement.children[0].textContent;
       var value = getValue(type);
-      console.log('type : ' + type + ' / value : ' + value);
+      // console.log('type : ' + type + ' / value : ' + value);
 
       if (value == 'Date') {
-        console.log('this is a date');
+        // console.log('this is a date');
         allInputs[i].click();
         var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
         var days = weeks[weeks.length-1].children;
@@ -425,7 +425,7 @@ function fillTask(id) {
     for (var i = 0; i < allTextareas.length; i++) {
       var type = allTextareas[i].parentElement.textContent;
       var value = getTextareaValue(type);
-      console.log('type : ' + type + ' / value : ' + value);
+      // console.log('type : ' + type + ' / value : ' + value);
       setNativeValue(allTextareas[i],  value);
       allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
     }
@@ -465,10 +465,10 @@ function fillTask(id) {
             for (var i = 0; i < allInputs.length; i++) {
               var type = allInputs[i].parentElement.parentElement.children[0].textContent;
               var value = getValue(type);
-              console.log('type : ' + type + ' / value : ' + value);
+              // console.log('type : ' + type + ' / value : ' + value);
   
               if (value == 'Date') {
-                console.log('this is a date');
+                // console.log('this is a date');
                 allInputs[i].click();
                 var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
                 var days = weeks[weeks.length-1].children;
@@ -531,10 +531,10 @@ chrome.runtime.onMessage.addListener(
         for (var i = 0; i < allInputs.length; i++) {
           var type = allInputs[i].parentElement.parentElement.children[0].textContent;
           var value = getValue(type);
-          console.log('type : ' + type + ' / value : ' + value);
+          // console.log('type : ' + type + ' / value : ' + value);
 
           if (value == 'Date') {
-            console.log('this is a date');
+            // console.log('this is a date');
             allInputs[i].click();
             var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
             var days = weeks[weeks.length-1].children;
@@ -563,7 +563,7 @@ chrome.runtime.onMessage.addListener(
         for (var i = 0; i < allTextareas.length; i++) {
           var type = allTextareas[i].parentElement.textContent;
           var value = getTextareaValue(type);
-          console.log('type : ' + type + ' / value : ' + value);
+          // console.log('type : ' + type + ' / value : ' + value);
           setNativeValue(allTextareas[i],  value);
           allTextareas[i].dispatchEvent(new Event('input', { bubbles: true }));
         }
@@ -583,10 +583,9 @@ chrome.runtime.onMessage.addListener(
           document.querySelector('#side-menu > li:nth-child(4) > a').click();
 
           // for testing
-          fillTask(1);
+          // fillTask(1);
 
-
-          var count = 1;
+          var count = 0;
           setInterval(function () {
             if (isFilling == false) {
               if (count == 91) {
@@ -597,6 +596,7 @@ chrome.runtime.onMessage.addListener(
                 console.log('this form is not working');
               }
               else {
+                console.log('filling form number ' + (count+1));
                 // changing the random value so no two tasks can have the same number
                 values[2].value = Math.floor(Math.random() * 999999999) + "";
                 fillTask(count+1);
