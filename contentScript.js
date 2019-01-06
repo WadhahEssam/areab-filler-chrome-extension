@@ -371,9 +371,6 @@ function fillTask(id) {
 
     var allTasks = document.querySelectorAll('.link_task-create');
     allTasks[id-1].click();
-
-    // changing the random value so no two tasks can have the same number
-    values[2].value =  Math.floor(Math.random() * 9999999) + "";
     
     // اختيار ( إرسال ) ء
     document.getElementById('submit-task-extension').click();
@@ -456,60 +453,53 @@ function fillTask(id) {
       }
       setTimeout(function () {
         var allTasks = document.querySelectorAll('tr');
-        for (var i = 1; i < allTasks.length; i++) {
-          console.log('searching for ' + getValue('رقم التكليف'))
-          if (allTasks[i].children[11].textContent.trim() == getValue('رقم التكليف').trim()) {
-            console.log(allTasks[i].children[0].textContent + " is found");
-            console.log('my job is suppose to be done');
-            allTasks[i].children[14].children[0].click();
 
+        allTasks[allTasks.length-1].children[14].children[0].click();
+
+          setTimeout(function () {
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> to solve the date ( needs refactoring ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             setTimeout(function () {
-
-              //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> to solve the date ( needs refactoring ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-              setTimeout(function () {
-                document.getElementById('validate-task-extension').click();
-              }, 900)
-              var allInputs = document.querySelectorAll('input.form-control');
-              for (var i = 0; i < allInputs.length; i++) {
-                var type = allInputs[i].parentElement.parentElement.children[0].textContent;
-                var value = getValue(type);
-                console.log('type : ' + type + ' / value : ' + value);
-    
-                if (value == 'Date') {
-                  console.log('this is a date');
-                  allInputs[i].click();
-                  var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
-                  var days = weeks[weeks.length-1].children;
-                  var lastDay = days[days.length-1];
-                  lastDay.click();
-                } 
-                else {
-                  setNativeValue(allInputs[i],  value);
-                  allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
-                }
+              document.getElementById('validate-task-extension').click();
+            }, 900)
+            var allInputs = document.querySelectorAll('input.form-control');
+            for (var i = 0; i < allInputs.length; i++) {
+              var type = allInputs[i].parentElement.parentElement.children[0].textContent;
+              var value = getValue(type);
+              console.log('type : ' + type + ' / value : ' + value);
+  
+              if (value == 'Date') {
+                console.log('this is a date');
+                allInputs[i].click();
+                var weeks = allInputs[i].parentElement.parentElement.parentElement.children[1].children[0].children[3].children[1].children;
+                var days = weeks[weeks.length-1].children;
+                var lastDay = days[days.length-1];
+                lastDay.click();
+              } 
+              else {
+                setNativeValue(allInputs[i],  value);
+                allInputs[i].dispatchEvent(new Event('input', { bubbles: true }));
               }
-              //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-              setTimeout(function () {
-                document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > div > div:nth-child(2) > span > button').click();
-                document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
-              }, 900)
-              setTimeout(function () {
-                document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-cancel.swal2-styled').click();
-              }, 1200)
+            }
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            setTimeout(function () {
+              document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > div > div:nth-child(2) > span > button').click();
+              document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
+            }, 900)
+            setTimeout(function () {
+              document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-cancel.swal2-styled').click();
+            }, 1200)
 
-              // going back to the all tasks page
-              setTimeout(function() {
-                // #side-menu > li:nth-child(4) > a
-                document.querySelector('#side-menu > li:nth-child(4) > a').click();
-                isFilling = false;
-              }, 1700);
-            }, 1500)
-            break;
-          }
-        }
+            // going back to the all tasks page
+            setTimeout(function() {
+              // #side-menu > li:nth-child(4) > a
+              document.querySelector('#side-menu > li:nth-child(4) > a').click();
+              isFilling = false;
+            }, 1700);
+          }, 1500)
+
       }, 1000)
-    },4000);
-  }, 4000)
+    },6000);
+  }, 6000)
 
 }
 
@@ -607,6 +597,8 @@ chrome.runtime.onMessage.addListener(
                 console.log('this form is not working');
               }
               else {
+                // changing the random value so no two tasks can have the same number
+                values[2].value = Math.floor(Math.random() * 999999999) + "";
                 fillTask(count+1);
                 count++;
               }
