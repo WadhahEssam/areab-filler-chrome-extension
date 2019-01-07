@@ -323,6 +323,14 @@ function getRadioValue(name) {
   return null;
 }
 
+function changeMainNumber() {
+  for (var i = 0; i < values.length; i++) {
+    if (values[i].type.trim() == 'رقم التكليف') {
+      values[i].value = Math.floor(Math.random() * 999999999) + "";
+    }
+  }
+}
+
 function getValue(type) {
   for (var i = 0; i < values.length; i++) {
     if (values[i].type.trim() == type.trim()) {
@@ -498,7 +506,7 @@ function fillTask(id) {
           }, 1500)
 
       }, 1000)
-    },6000);
+    }, 6000);
   }, 6000)
 
 }
@@ -589,14 +597,15 @@ chrome.runtime.onMessage.addListener(
               } 
               else if (count == 4){
                 count++;
-                console.log('this form is not working');
+                // console.log('this form is not working');
               }
               else {
                 console.log('filling ' + (count+1) + '/91');
                 // changing the random value so no two tasks can have the same number
-                values[2].value = Math.floor(Math.random() * 999999999) + "";
                 fillTask(count+1);
                 count++;
+                changeMainNumber();
+                console.log('value is ' + getValue('رقم التكليف'));
               }
             }
           }, 1000)
