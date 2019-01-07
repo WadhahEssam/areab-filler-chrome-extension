@@ -576,10 +576,6 @@ chrome.runtime.onMessage.addListener(
         document.getElementById('fill-property-type').click();
       } 
       else if (request.type == 'fill-all'){
-
-        if (window.location.href !== "http://localhost:8081/tasks/1/create") {
-          console.log('go to the create page of the first form');
-        } else {
           document.querySelector('#side-menu > li:nth-child(4) > a').click();
 
           // for testing
@@ -596,7 +592,7 @@ chrome.runtime.onMessage.addListener(
                 console.log('this form is not working');
               }
               else {
-                console.log('filling form number ' + (count+1));
+                console.log('filling ' + (count+1) + '/91');
                 // changing the random value so no two tasks can have the same number
                 values[2].value = Math.floor(Math.random() * 999999999) + "";
                 fillTask(count+1);
@@ -604,8 +600,6 @@ chrome.runtime.onMessage.addListener(
               }
             }
           }, 1000)
-
-        }
       }
 
   });
