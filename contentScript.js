@@ -605,7 +605,7 @@ chrome.runtime.onMessage.addListener(
                 fillTask(count+1);
                 count++;
                 changeMainNumber();
-                console.log('value is ' + getValue('رقم التكليف'));
+                // console.log('value is ' + getValue('رقم التكليف'));
               }
             }
           }, 1000)
