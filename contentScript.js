@@ -468,7 +468,7 @@ function fillTask(id) {
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> to solve the date ( needs refactoring ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             setTimeout(function () {
               document.getElementById('validate-task-extension').click();
-            }, 900)
+            }, 1000)
             var allInputs = document.querySelectorAll('input.form-control');
             for (var i = 0; i < allInputs.length; i++) {
               var type = allInputs[i].parentElement.parentElement.children[0].textContent;
@@ -492,18 +492,18 @@ function fillTask(id) {
             setTimeout(function () {
               document.querySelector('#page-wrapper > div.overflow-container > form > div > div.formButtons__cont > div > div:nth-child(2) > span > button').click();
               document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-confirm.swal2-styled').click();
-            }, 900)
+            }, 1200)
             setTimeout(function () {
               document.querySelector('#body > div.swal2-container.swal2-center.swal2-fade.swal2-shown > div > div.swal2-actions > button.swal2-cancel.swal2-styled').click();
-            }, 1200)
+            }, 1700)
 
             // going back to the all tasks page
             setTimeout(function() {
               // #side-menu > li:nth-child(4) > a
               document.querySelector('#side-menu > li:nth-child(4) > a').click();
               isFilling = false;
-            }, 1700);
-          }, 1500)
+            }, 2200);
+          }, 2000)
 
       }, 1000)
     }, 6000);
